@@ -1,0 +1,138 @@
+=========================================
+COMPLETE SETUP FOR .HTACCESS ONLY
+=========================================
+
+Laravel REQUIRES a .env file to exist, but we can
+make it minimal and use .htaccess for all values.
+
+=========================================
+STEP 1: CREATE MINIMAL .ENV FILE
+=========================================
+
+Create file: public_html/tarek/.env
+
+Copy EXACTLY this content (empty values):
+
+# Minimal .env - all values come from .htaccess
+APP_NAME=
+APP_ENV=
+APP_KEY=
+APP_DEBUG=
+APP_URL=
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+SESSION_DRIVER=
+QUEUE_CONNECTION=
+CACHE_DRIVER=
+
+Or use the .env.minimal file I created.
+
+The empty values tell Laravel to use server
+environment variables from .htaccess!
+
+=========================================
+STEP 2: YOUR .HTACCESS FILES ARE CORRECT
+=========================================
+
+Root: public_html/tarek/.htaccess
+Public: public_html/tarek/public/.htaccess
+
+Both already have all SetEnv values!
+
+=========================================
+STEP 3: VERIFY VENDOR FOLDER EXISTS
+=========================================
+
+Check: public_html/tarek/vendor/
+
+If missing, run:
+cd ~/public_html/tarek
+composer install --no-dev
+
+Or upload vendor folder via FTP
+
+=========================================
+STEP 4: FIX PERMISSIONS
+=========================================
+
+chmod -R 755 storage
+chmod -R 755 bootstrap/cache
+
+Or via File Manager:
+- storage → 755 (recursive)
+- bootstrap/cache → 755 (recursive)
+
+=========================================
+STEP 5: CREATE REQUIRED DIRECTORIES
+=========================================
+
+Make sure these exist:
+
+storage/
+├── framework/
+│   ├── sessions/
+│   ├── views/
+│   └── cache/
+│       └── data/
+└── logs/
+
+bootstrap/
+└── cache/
+
+=========================================
+STEP 6: IMPORT DATABASE
+=========================================
+
+phpMyAdmin → u624844894_tarek → Import
+Upload: database_import.sql
+
+=========================================
+STEP 7: TEST
+=========================================
+
+Visit: https://tarek.arvixi.net
+
+Should show login page!
+
+Login: admin / admin123
+
+=========================================
+WHY .ENV IS NEEDED (EVEN IF EMPTY):
+=========================================
+
+Laravel's bootstrap process checks for .env
+If it doesn't exist, Laravel fails to load.
+
+Solution: Create .env with empty values
+Laravel will then use SetEnv from .htaccess!
+
+=========================================
+FILE STRUCTURE:
+=========================================
+
+public_html/tarek/
+├── .env                 ← Empty values (required!)
+├── .htaccess           ← All actual config here
+├── vendor/             ← Must exist!
+├── storage/            ← 755 permissions
+├── bootstrap/cache/    ← 755 permissions
+└── public/
+    ├── .htaccess       ← All actual config here
+    └── index.php
+
+=========================================
+COMPLETE FILES NEEDED:
+=========================================
+
+1. .env (minimal/empty) - from .env.minimal
+2. .htaccess (with SetEnv) - already created
+3. public/.htaccess (with SetEnv) - already created
+4. vendor/ folder - run composer install
+5. database imported - database_import.sql
+
+=========================================
+

@@ -1,0 +1,108 @@
+=========================================
+FIX BLANK/WHITE PAGE - QUICK GUIDE
+=========================================
+
+White page = Errors are hidden!
+
+=========================================
+STEP 1: UPLOAD TEST FILES
+=========================================
+
+I created 2 diagnostic files:
+
+1. Upload: public/phpinfo.php
+   Visit: https://tarek.arvixi.net/phpinfo.php
+
+2. Upload: public/check-errors.php
+   Visit: https://tarek.arvixi.net/check-errors.php
+
+These will show EXACTLY what's wrong!
+
+=========================================
+STEP 2: ENABLE ERROR DISPLAY
+=========================================
+
+Edit: public_html/tarek/public/.htaccess
+
+Add at the VERY TOP (line 1):
+
+php_flag display_errors on
+php_value error_reporting E_ALL
+
+And change:
+SetEnv APP_DEBUG true
+
+Save and refresh: https://tarek.arvixi.net
+
+You'll see the actual error!
+
+=========================================
+MOST LIKELY CAUSE: Missing vendor/
+=========================================
+
+Does this folder exist?
+public_html/tarek/vendor/
+
+If NO, that's your problem!
+
+Fix:
+cd ~/public_html/tarek
+composer install --no-dev
+
+Or upload vendor folder via FTP
+
+=========================================
+OTHER COMMON CAUSES:
+=========================================
+
+1. Wrong storage permissions
+   Fix: chmod -R 755 storage bootstrap/cache
+
+2. Database not imported
+   Fix: Import database_import.sql in phpMyAdmin
+
+3. APP_KEY not set
+   Fix: Check .htaccess has SetEnv APP_KEY
+
+4. Missing storage directories
+   Fix: Create storage/framework/sessions, views, cache/data
+
+=========================================
+QUICK DEBUG .HTACCESS
+=========================================
+
+Temporarily use this at top of .htaccess:
+
+php_flag display_errors on
+php_value error_reporting E_ALL
+
+SetEnv APP_DEBUG true
+SetEnv APP_ENV local
+
+This will show errors!
+
+After fixing, change back to:
+SetEnv APP_DEBUG false
+SetEnv APP_ENV production
+
+=========================================
+AFTER FIXING:
+=========================================
+
+1. Remove error display lines
+2. Change APP_DEBUG back to false
+3. Delete test files:
+   - public/phpinfo.php
+   - public/check-errors.php
+   - public/test-env.php
+
+=========================================
+VISIT CHECK FILE NOW:
+=========================================
+
+https://tarek.arvixi.net/check-errors.php
+
+This will tell you exactly what's wrong!
+
+=========================================
+

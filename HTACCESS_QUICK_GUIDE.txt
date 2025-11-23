@@ -1,0 +1,120 @@
+=========================================
+.HTACCESS ONLY SETUP (NO .ENV FILE)
+=========================================
+
+Your Subdomain: tarek.arvixi.net
+Your Folder: public_html/tarek/
+
+=========================================
+STEP 1: UPLOAD FILES
+=========================================
+
+Upload all Laravel files to:
+public_html/tarek/
+
+=========================================
+STEP 2: REPLACE .HTACCESS FILES
+=========================================
+
+File 1: public_html/tarek/.htaccess
+---------------------------------------
+Use the content from: .htaccess.subdomain
+
+File 2: public_html/tarek/public/.htaccess
+-------------------------------------------
+Use the content from: public/.htaccess.subdomain
+
+Both files contain ALL environment variables!
+
+=========================================
+STEP 3: DELETE .ENV FILE (Optional)
+=========================================
+
+Delete if exists:
+public_html/tarek/.env
+
+Not needed! Everything is in .htaccess now.
+
+=========================================
+STEP 4: FIX PERMISSIONS
+=========================================
+
+Via Terminal:
+cd ~/public_html/tarek
+chmod -R 755 storage
+chmod -R 755 bootstrap/cache
+
+Via File Manager:
+- storage → 755 (recursive)
+- bootstrap/cache → 755 (recursive)
+
+=========================================
+STEP 5: IMPORT DATABASE
+=========================================
+
+1. cPanel → phpMyAdmin
+2. Click database: u624844894_tarek
+3. Import tab
+4. Choose: database_import.sql
+5. Click Go
+
+=========================================
+STEP 6: CONFIGURE SUBDOMAIN
+=========================================
+
+cPanel → Subdomains → tarek.arvixi.net
+
+Change Document Root to:
+public_html/tarek/public
+
+=========================================
+STEP 7: TEST
+=========================================
+
+Visit: https://tarek.arvixi.net
+
+Login:
+Username: admin
+Password: admin123
+
+=========================================
+WHAT'S IN .HTACCESS FILES:
+=========================================
+
+All these variables are set via SetEnv:
+
+APP_KEY=base64:8dQ7xw9W8CbKk5UlZjKMfGzKWz0XvP8qN5YzLtQmRkE=
+APP_URL=https://tarek.arvixi.net
+APP_DEBUG=false
+
+DB_HOST=localhost
+DB_DATABASE=u624844894_tarek
+DB_USERNAME=u624844894_tarek
+DB_PASSWORD=Gofuckurself123*
+
+SESSION_DRIVER=database
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+
+=========================================
+FILES YOU NEED:
+=========================================
+
+1. .htaccess.subdomain
+   → Copy to: public_html/tarek/.htaccess
+
+2. public/.htaccess.subdomain
+   → Copy to: public_html/tarek/public/.htaccess
+
+3. database_import.sql
+   → Import via phpMyAdmin
+
+=========================================
+NO .ENV FILE REQUIRED!
+=========================================
+
+All configuration is in .htaccess files.
+Laravel reads SetEnv variables automatically.
+
+=========================================
+

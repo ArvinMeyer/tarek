@@ -1,0 +1,91 @@
+=========================================
+QUICK FIX - Subdomain Document Root
+=========================================
+
+Problem: URL shows /public/index.php
+
+Solution: Change subdomain document root!
+
+=========================================
+METHOD 1: Change Document Root (BEST)
+=========================================
+
+1. Login to cPanel
+
+2. Click "Subdomains"
+
+3. Find: tarek.arvixi.net
+
+4. Look at "Document Root" column
+   
+   Currently: public_html/tarek
+   
+   Change to: public_html/tarek/public
+   
+5. Click Edit/Save
+
+6. Test: https://tarek.arvixi.net
+   (should show login page without /public)
+
+=========================================
+METHOD 2: Use Redirect .htaccess
+=========================================
+
+If you can't change document root:
+
+1. Replace public_html/tarek/.htaccess
+   With content from: .htaccess.redirect_to_public
+
+2. This will auto-redirect to public folder
+
+3. Test: https://tarek.arvixi.net
+
+=========================================
+VERIFY YOUR SETUP
+=========================================
+
+Check if these exist:
+
+public_html/tarek/
+├── app/
+├── bootstrap/
+├── config/
+├── public/          ← Subdomain should point HERE
+│   ├── .htaccess
+│   └── index.php
+├── storage/
+└── vendor/
+
+=========================================
+CORRECT URL
+=========================================
+
+✅ Should be: https://tarek.arvixi.net
+❌ NOT: https://tarek.arvixi.net/public/index.php
+
+=========================================
+AFTER FIXING
+=========================================
+
+Visit: https://tarek.arvixi.net
+
+Login:
+Username: admin
+Password: admin123
+
+=========================================
+STILL 500 ERROR?
+=========================================
+
+Enable debug in .htaccess:
+
+Change this line:
+SetEnv APP_DEBUG true
+
+Visit site to see actual error.
+
+After fixing, change back to:
+SetEnv APP_DEBUG false
+
+=========================================
+

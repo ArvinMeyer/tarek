@@ -1,0 +1,82 @@
+=========================================
+QUICK FIX FOR 500 ERROR
+=========================================
+
+Most common issue: Missing APP_KEY or wrong permissions!
+
+METHOD 1: Via cPanel Terminal
+------------------------------
+cd public_html
+php artisan key:generate --force
+chmod -R 755 storage
+chmod -R 755 bootstrap/cache
+
+METHOD 2: Manual Fix (No Terminal Access)
+------------------------------------------
+
+1. CREATE/UPDATE .env FILE:
+
+Make sure public_html/.env exists with this content:
+
+APP_NAME="PrintItMat"
+APP_ENV=production
+APP_KEY=base64:8dQ7xw9W8CbKk5UlZjKMfGzKWz0XvP8qN5YzLtQmRkE=
+APP_DEBUG=false
+APP_URL=https://tarek.arvixi.net
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=u624844894_tarek
+DB_USERNAME=u624844894_tarek
+DB_PASSWORD=Gofuckurself123*
+
+SESSION_DRIVER=database
+QUEUE_CONNECTION=sync
+CACHE_DRIVER=file
+
+2. FIX PERMISSIONS (via File Manager):
+
+Right-click these folders → Permissions → 755:
+- storage (check "recurse into subdirectories")
+- bootstrap/cache (check "recurse into subdirectories")
+
+3. CHECK PHP VERSION:
+
+cPanel → Select PHP Version → Choose 8.2 or higher
+
+4. ENABLE DEBUG TO SEE ERROR:
+
+Change in .env:
+APP_DEBUG=true
+APP_ENV=local
+
+Refresh site to see actual error.
+After fixing, change back to:
+APP_DEBUG=false
+APP_ENV=production
+
+=========================================
+CHECK THESE FILES EXIST:
+=========================================
+
+public_html/
+├── .env (IMPORTANT!)
+├── .htaccess
+├── vendor/ (folder)
+├── storage/ (folder - permissions 755)
+├── bootstrap/cache/ (folder - permissions 755)
+└── public/
+    ├── .htaccess
+    └── index.php
+
+=========================================
+TEST AFTER FIXING:
+=========================================
+
+Visit: https://tarek.arvixi.net
+Should see login page
+Login: admin / admin123
+
+=========================================
+

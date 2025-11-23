@@ -1,0 +1,129 @@
+=========================================
+CURRENT STATUS - 500 ERROR FIX
+=========================================
+
+Good news: URL is correct now (no /public/)
+Bad news: Still getting 500 error
+
+This means one of these is missing:
+1. vendor folder (99% probability)
+2. .env file (even if empty)
+3. Storage permissions wrong
+4. Database not imported
+
+=========================================
+STEP 1: UPLOAD DEBUG FILE
+=========================================
+
+I created: public/debug.php
+
+Upload to: public_html/tarek/public/debug.php
+
+Visit: https://tarek.arvixi.net/debug.php
+
+This will show EXACTLY what's missing!
+No Laravel needed - pure PHP diagnostic.
+
+=========================================
+STEP 2: MOST LIKELY FIX
+=========================================
+
+Missing vendor folder!
+
+Check if this exists:
+public_html/tarek/vendor/
+
+If NO, that's your problem!
+
+FIX:
+
+Option A - Via Terminal:
+cd ~/public_html/tarek
+composer install --no-dev
+
+Option B - Via FTP:
+1. Install Composer on local computer
+2. Run: composer install --no-dev
+3. Upload vendor folder via FTP
+
+The vendor folder is about 50MB and contains
+all Laravel framework files!
+
+=========================================
+STEP 3: CREATE MINIMAL .ENV
+=========================================
+
+Even though we use .htaccess, Laravel still
+needs .env file to exist.
+
+Create: public_html/tarek/.env
+
+Content (EMPTY VALUES):
+APP_NAME=
+APP_ENV=
+APP_KEY=
+APP_DEBUG=
+APP_URL=
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+SESSION_DRIVER=
+QUEUE_CONNECTION=
+CACHE_DRIVER=
+
+Use file: env_template_for_htaccess.txt
+
+=========================================
+STEP 4: FIX PERMISSIONS
+=========================================
+
+Via Terminal:
+cd ~/public_html/tarek
+chmod -R 755 storage
+chmod -R 755 bootstrap/cache
+
+Via File Manager:
+- Right-click storage → Permissions → 755 (recursive)
+- Right-click bootstrap/cache → Permissions → 755 (recursive)
+
+=========================================
+STEP 5: CREATE REQUIRED DIRECTORIES
+=========================================
+
+Make sure these exist:
+- storage/framework/sessions/
+- storage/framework/views/
+- storage/framework/cache/data/
+- storage/logs/
+- bootstrap/cache/
+
+Via Terminal:
+mkdir -p storage/framework/{sessions,views,cache/data}
+mkdir -p storage/logs bootstrap/cache
+
+=========================================
+PRIORITY ORDER:
+=========================================
+
+1. Upload debug.php → See what's missing
+2. Install vendor folder (if missing)
+3. Create .env file (if missing)
+4. Fix permissions
+5. Import database
+6. Test!
+
+=========================================
+VISIT DEBUG PAGE NOW:
+=========================================
+
+https://tarek.arvixi.net/debug.php
+
+This will tell you EXACTLY what to fix!
+
+After fixing, delete debug.php for security.
+
+=========================================
+
